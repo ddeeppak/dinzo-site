@@ -2,6 +2,7 @@ import React from 'react';
 
 import img1 from '../../images/home/Banner/carousel-1.jpg'
 import img2 from '../../images/home/Banner/carousel-2.jpg'
+import { Link } from 'react-router-dom';
 
 const FeatureComponent = () => {
     return (
@@ -72,7 +73,9 @@ const Home = () => {
                         <a href="contact.html" className="nav-item nav-link">Contact</a>
                     </div>
                     <div className="navbar-nav ml-auto py-0">
-                        <a href="./Login/login.html" className="nav-item nav-link">Login</a>
+                        <Link to="/login">
+                        <p className="nav-item nav-link">Login</p>
+                        </Link>
                         <a href="./Signup/signup.html" className="nav-item nav-link">Register</a>
                     </div>
                 </div>
