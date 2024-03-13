@@ -1,23 +1,40 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-import Navigation from '../navigation';
-import Footer from '../footer';
-import Support from '../support';
 import '../../stylesheets/login/style.css';
+
 const LoginForm = () => {
     const [emailOrPhone, setEmailOrPhone] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Handle form submission here
+        
+        try {
+            const response = await fetch("http://localhost:5000/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json" // Fixed Content-Type header
+                },
+                body: JSON.stringify({
+                    email: emailOrPhone,
+                    password: password
+                })
+            });
+
+            const data = await response.json(); // Convert response to JSON
+
+            console.log(data);
+            localStorage.setItem("Token",data.Token);
+            
+            window.alert("Login SuccessFully");
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error appropriately (e.g., show error message to the user)
+        }
     };
 
     return (
         <>
-            <Support />
-            <Navigation />
             <div className="container">
                 <div className="wrapper">
                     <div className="title"><span>Login Form</span></div>
@@ -48,7 +65,6 @@ const LoginForm = () => {
                     </form>
                 </div>
             </div>
-            <Footer />
         </>
     );
 };

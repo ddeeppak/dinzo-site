@@ -12,15 +12,9 @@ import '../../stylesheets/home/style.css';
 
 const Home = () =>{
     return (
-        <>
-            <div className="container-fluid"> 
-                <Support />
-                <Navigation />
-            </div>
-            <FeatureComponent />
+        <>  
             <Services />
             <Product />
-            <Footer />
         </>
     )
 }

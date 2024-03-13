@@ -4,7 +4,7 @@ import React from 'react';
 import img1 from '../../images/payments.png';
 
 const Footer = () => {
-    return (
+    return (<>
         <div className="container-fluid bg-secondary text-dark mt-5 pt-5">
             <div className="row px-xl-5 pt-5">
                 <div className="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
@@ -68,7 +68,10 @@ const Footer = () => {
                 </div>
             </div>
         </div>
-    );
+        <a href="#" className="btn btn-primary back-to-top" style={{ display: 'inline' }}>
+            <i className="fa fa-angle-double-up"></i>
+        </a>
+    </>);
 }
 
 export default Footer;

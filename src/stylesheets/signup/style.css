@@ -5,7 +5,12 @@
   outline: none;
   font-family: 'Poppins', sans-serif;
 }
-
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
 ::selection{
   color: rgba(26,188,156,0.3);;
   background: #1abc9c;
