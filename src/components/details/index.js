@@ -32,10 +32,7 @@ const ProductView = () => {
                 }
             });
             const data = await response.json();
-            setCart(data); // Assuming setCart updates the state with the received data
             localStorage.setItem('cart', JSON.stringify(data));
-            
-            setItems(await data.items);
             console.log(data);
             
         } catch (error) {
