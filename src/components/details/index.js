@@ -10,6 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const url = 'http://localhost:5000';
 
+
 const ProductView = () => {
 
     const location = useLocation();
@@ -20,6 +21,27 @@ const ProductView = () => {
         fetchProduct(location.pathname)
     }, [location.pathname]);
 
+    async function fetchCart() {
+        try {
+            console.log("call started")
+            const response = await fetch('http://localhost:5000/cart', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization":localStorage.getItem("Token")
+                }
+            });
+            const data = await response.json();
+            setCart(data); // Assuming setCart updates the state with the received data
+            localStorage.setItem('cart', JSON.stringify(data));
+            
+            setItems(await data.items);
+            console.log(data);
+            
+        } catch (error) {
+            console.error(error);
+        }
+    }
     async function fetchProduct(path)
     {
         try {
@@ -51,6 +73,8 @@ const ProductView = () => {
         } catch (error) {
             console.error('Error adding product to cart:', error);
         }
+
+        fetchCart()
     }
 
     async function makepayment(){
