@@ -26,8 +26,12 @@ const LoginForm = () => {
 
             console.log(data);
             localStorage.setItem("Token",data.Token);
-            
-            window.alert("Login SuccessFully");
+
+            window.alert("Login Successful");
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000); 
+
         } catch (error) {
             console.error('Error:', error);
             // Handle error appropriately (e.g., show error message to the user)
