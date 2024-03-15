@@ -1,17 +1,15 @@
 import React from "react";
 
-
 // import Razorpay from 'razorpay';
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { loadStripe } from "@stripe/stripe-js";
 
-
 const url = 'https://dinzo-api.onrender.com';
 
-
 const ProductView = () => {
+
 
     const location = useLocation();
     const [productsData, setproductsData] = useState([]);
