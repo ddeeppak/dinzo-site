@@ -147,7 +147,7 @@ const Home = () => {
                         <Link to="/login">
                         <p className="nav-item nav-link">Login</p>
                         </Link>
-                        <a href="./Signup/signup.html" className="nav-item nav-link">Register</a>
+                        <a href="./Signup/" className="nav-item nav-link">Register</a>
                     </div>
                 </div>
             </nav>
