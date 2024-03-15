@@ -1,29 +1,21 @@
-import React from "react";
-
-
-// import Razorpay from 'razorpay';
-
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { loadStripe } from "@stripe/stripe-js";
 
-
 const url = 'http://localhost:5000';
 
-
 const ProductView = () => {
-
     const location = useLocation();
     const [productsData, setproductsData] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const productId = (location.pathname).split('/')[2];
+
     useEffect(() => {
         fetchProduct(location.pathname)
     }, [location.pathname]);
 
     async function fetchCart() {
         try {
-            console.log("call started")
             const response = await fetch('http://localhost:5000/cart', {
                 method: "GET",
                 headers: {
@@ -34,15 +26,14 @@ const ProductView = () => {
             const data = await response.json();
             localStorage.setItem('cart', JSON.stringify(data));
             console.log(data);
-            
         } catch (error) {
             console.error(error);
         }
     }
-    async function fetchProduct(path)
-    {
+
+    async function fetchProduct(path) {
         try {
-            const response = await fetch(url+path, {
+            const response = await fetch(url + path, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -56,101 +47,43 @@ const ProductView = () => {
             console.error(error);
         }
     }
-    async function addToCart(productid,quantity)
-    {
+
+    async function addToCart(productid, quantity) {
         try {
-            const response = await fetch(url+'/cart', {
+            const response = await fetch(url + '/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'authorization':localStorage.getItem('Token')
+                    'authorization': localStorage.getItem('Token')
                 },
-                body: JSON.stringify({ productid:productId, quantity:quantity })
+                body: JSON.stringify({ productid: productId, quantity: quantity })
             });
+            fetchCart();
         } catch (error) {
             console.error('Error adding product to cart:', error);
         }
-
-        fetchCart()
     }
 
-    async function makepayment(){
+    async function makePayment() {
         const stripe = await loadStripe('pk_test_51Ofd8ZSHG3VMe4sjoy4D7uCVc8kA2siSW0OonJQeJxREYyzVPUVQX0DNCNhG61iOp0bR0YobYTBkRiYp9oR3y5OO00MAUc0vGi');
 
         const headers = {
-            'Content-Type' : 'application/json'
+            'Content-Type': 'application/json'
         }
-        const  response = await fetch(url+'/create-checkout-session',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application'
-            },
-            body:JSON.stringify(productsData)
-        })
+        const response = await fetch(url + '/create-checkout-session', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(productsData)
+        });
 
         const session = await response.json();
         const result = stripe.redirectToCheckout({
-            sessionId:session.id
-        })
-        if((await result).error)
-        {
+            sessionId: session.id
+        });
+        if ((await result).error) {
             console.log((await result).error);
         }
     }
-
-
-    // async function makepayment() {
-    //     const razorpay = new Razorpay({
-    //       key: 'rzp_test_YOUR_RAZORPAY_KEY_ID', // Replace with your Razorpay key ID
-    //       secret: 'YOUR_RAZORPAY_KEY_SECRET', // Replace with your Razorpay key secret
-    //     });
-      
-    //     const options = {
-    //       amount: productsData.amount * 100, // Convert amount to paise
-    //       currency: productsData.currency || 'INR', // Set currency (default to INR)
-    //       description: productsData.description,
-    //       order_id: 'order_id_' + Math.random().toString(36).substring(2, 15), // Generate unique order ID
-    //     };
-      
-    //     try {
-    //       const response = await razorpay.orders.create(options);
-      
-    //       const { data: { id: order_id, razorpay_payment_id } } = response; // Extract order ID and payment ID
-      
-    //       const paymentOptions = {
-    //         "key": "rzp_test_YOUR_RAZORPAY_KEY_ID", // Replace with your Razorpay key ID
-    //         "amount": options.amount,
-    //         "currency": options.currency,
-    //         "name": "Your Company Name", // Replace with your company name
-    //         "description": options.description,
-    //         "order_id": order_id, // Use the generated order ID
-    //         "handler": function (response) {
-    //           if (response.razorpay_payment_id) {
-    //             // Handle successful payment
-    //             console.log('Payment successful:', response.razorpay_payment_id);
-      
-    //             // Send payment confirmation to your server (replace with your logic)
-    //             // fetch(url + '/payment-confirmation', {
-    //             //   method: 'POST',
-    //             //   body: JSON.stringify({ paymentId: response.razorpay_payment_id }),
-    //             // })
-    //             //   .then(response => console.log('Payment confirmation sent'))
-    //             //   .catch(error => console.error(error));
-      
-    //           } else if (response.error) {
-    //             // Handle payment failure
-    //             console.error('Payment failed:', response.error);
-    //           }
-    //         },
-    //       };
-      
-    //       const rzp = new window.Razorpay(paymentOptions);
-    //       rzp.open();
-    //     } catch (error) {
-    //       console.error('Error creating Razorpay order:', error);
-    //     }
-    //   }
-      
 
     return (
         <div className="container-fluid py-5">
