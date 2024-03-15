@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import img1 from '../../images/product/product1.png'
 
-// const url = ;
+const url = 'https://dinzo-api.onrender.com' ;
 
 const Products = () => {
     const [productsData, setProductsData] = useState([]);
@@ -13,7 +13,7 @@ const Products = () => {
     async function fetchTrendingProducts() {
         try {
             console.log("call started")
-            const response = await fetch('http://localhost:5000/trendingproducts', {
+            const response = await fetch(url+'/trendingproducts', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

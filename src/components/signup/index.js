@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../stylesheets/signup/style.css';
+const url = 'https://dinzo-api.onrender.com';
 
 function RegistrationForm() {
     const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ function RegistrationForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            fetch('http//localhost:5000/signup',{
+            fetch(url+'/signup',{
               method:'POST',
               headers:{
                 'Content-Type': 'application/json'

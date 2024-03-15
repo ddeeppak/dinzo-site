@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { loadStripe } from "@stripe/stripe-js";
 
 
-const url = 'http://localhost:5000';
+const url = 'https://dinzo-api.onrender.com';
 
 
 const ProductView = () => {
@@ -24,7 +24,7 @@ const ProductView = () => {
     async function fetchCart() {
         try {
             console.log("call started")
-            const response = await fetch('http://localhost:5000/cart', {
+            const response = await fetch(url+'/cart', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

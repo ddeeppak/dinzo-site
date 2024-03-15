@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
-
+const url = 'https://dinzo-api.onrender.com';
 function Cart() {
     const [cart, setCart] = useState({ items: [], totalAmount: 0 });
 
@@ -11,7 +11,7 @@ function Cart() {
     async function fetchCart() {
         try {
             console.log("call started");
-            const response = await fetch('http://localhost:5000/cart', {
+            const response = await fetch(url+'/cart', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,7 +31,7 @@ function Cart() {
     async function deleteItem(id) {
         try {
             console.log("call started");
-            const response = await fetch(`http://localhost:5000/cart/${id}`, {
+            const response = await fetch(url+`/cart/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -60,7 +60,7 @@ function Cart() {
     async function makepayment() {
         const stripe = await loadStripe('pk_test_51Ofd8ZSHG3VMe4sjoy4D7uCVc8kA2siSW0OonJQeJxREYyzVPUVQX0DNCNhG61iOp0bR0YobYTBkRiYp9oR3y5OO00MAUc0vGi');
     
-        const response = await fetch('http://localhost:5000/create-checkout-session', {
+        const response = await fetch(url+'/create-checkout-session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

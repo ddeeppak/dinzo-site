@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const url = 'https://dinzo-api.onrender.com';
+
 const NewProducts = () => {
     const [productsData, setProductsData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const NewProducts = () => {
     async function fetchTrendingProducts() {
         try {
             console.log("call started")
-            const response = await fetch('http://localhost:5000/newproducts', {
+            const response = await fetch(url+'/newproducts', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

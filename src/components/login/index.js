@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import '../../stylesheets/login/style.css';
+const url = 'https://dinzo-api.onrender.com';
 
 const LoginForm = () => {
     const [emailOrPhone, setEmailOrPhone] = useState('');
@@ -10,7 +11,7 @@ const LoginForm = () => {
         event.preventDefault();
         
         try {
-            const response = await fetch("http://localhost:5000/login", {
+            const response = await fetch(url+"/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json" // Fixed Content-Type header
