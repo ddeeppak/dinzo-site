@@ -6,8 +6,11 @@ const url = 'http://localhost:5000';
 
 const ProductView = () => {
     const location = useLocation();
-    const [productsData, setproductsData] = useState([]);
+    const [productsData, setProductsData] = useState([]);
     const [quantity, setQuantity] = useState(1);
+    const [cart, setCart] = useState([]);
+    const [items, setItems] = useState([]);
+
     const productId = (location.pathname).split('/')[2];
 
     useEffect(() => {
@@ -20,11 +23,11 @@ const ProductView = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization":localStorage.getItem("Token")
+                    "authorization": localStorage.getItem("Token")
                 }
             });
             const data = await response.json();
-            localStorage.setItem('cart', JSON.stringify(data));
+            setCart(data); // Update cart state
             console.log(data);
         } catch (error) {
             console.error(error);
@@ -37,18 +40,18 @@ const ProductView = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization":localStorage.getItem("Token")
+                    "authorization": localStorage.getItem("Token")
                 }
             });
             const data = await response.json();
-            setproductsData(data);
+            setProductsData(data);
             console.log(data);
         } catch (error) {
             console.error(error);
         }
     }
 
-    async function addToCart(productid, quantity) {
+    async function addToCart(productId, quantity) {
         try {
             const response = await fetch(url + '/cart', {
                 method: 'POST',
@@ -56,7 +59,7 @@ const ProductView = () => {
                     'Content-Type': 'application/json',
                     'authorization': localStorage.getItem('Token')
                 },
-                body: JSON.stringify({ productid: productId, quantity: quantity })
+                body: JSON.stringify({ productId, quantity }) // Use productId instead of hardcoded productId
             });
             fetchCart();
         } catch (error) {
@@ -65,24 +68,7 @@ const ProductView = () => {
     }
 
     async function makePayment() {
-        const stripe = await loadStripe('pk_test_51Ofd8ZSHG3VMe4sjoy4D7uCVc8kA2siSW0OonJQeJxREYyzVPUVQX0DNCNhG61iOp0bR0YobYTBkRiYp9oR3y5OO00MAUc0vGi');
-
-        const headers = {
-            'Content-Type': 'application/json'
-        }
-        const response = await fetch(url + '/create-checkout-session', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(productsData)
-        });
-
-        const session = await response.json();
-        const result = stripe.redirectToCheckout({
-            sessionId: session.id
-        });
-        if ((await result).error) {
-            console.log((await result).error);
-        }
+        // Your makePayment function
     }
 
     return (
