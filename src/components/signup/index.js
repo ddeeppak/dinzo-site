@@ -59,7 +59,10 @@ function RegistrationForm() {
                 <input type="text" name="lastName" className="form-control" placeholder="Last Name" required onChange={handleChange} />
                 <label htmlFor="lastName">Last Name</label>
             </div>
-
+            <div className="form-label-group">
+                <input type="text" name="phoneNumber" className="form-control" placeholder="PhoneNumber" required onChange={handleChange} />
+                <label htmlFor="lastName">Phone Number</label>
+            </div>
             <div className="form-label-group">
                 <input type="email" name="email" className="form-control" placeholder="Email address" required onChange={handleChange} />
                 <label htmlFor="email">Email address</label>
