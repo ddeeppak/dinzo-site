@@ -31,7 +31,7 @@ function RegistrationForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            fetch(url+'/signup',{
+            fetch(url+'/signin',{
               method:'POST',
               headers:{
                 'Content-Type': 'application/json'
