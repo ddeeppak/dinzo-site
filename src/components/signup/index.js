@@ -39,6 +39,7 @@ function RegistrationForm() {
               body:JSON.stringify(formData)
             })
             alert('Registration successful!');
+            window.location.href = '/login';
         } catch (error) {
             console.error('Registration failed:', error);
         }
