@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-
 import '../../stylesheets/login/style.css';
-const url = 'https://dinzo-api.onrender.com';
 
-const LoginForm = () => {
+const Login = () => {
     const [emailOrPhone, setEmailOrPhone] = useState('');
     const [password, setPassword] = useState('');
+
+    const url = "https://dinzo-api.onrender.com"; // Define your API URL here
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -22,16 +22,18 @@ const LoginForm = () => {
                 })
             });
 
-            const data = await response.json(); // Convert response to JSON
-
-            console.log(data);
-            localStorage.setItem("Token",data.Token);
-
-            window.alert("Login Successful");
-            setTimeout(() => {
-                window.location.href = '/';
-            }, 1000); 
-
+            const data = await response.json();
+            
+            if (response.ok) {
+                console.log(data);
+                localStorage.setItem("Token", data.Token);
+                window.alert("Login Successfully");
+            } else if (response.status === 404) {
+                window.alert("Username or password incorrect");
+            } else {
+                console.error('Error:', data);
+                window.alert("An error occurred. Please try again later."); // Show a generic error message
+            }
         } catch (error) {
             console.error('Error:', error);
             // Handle error appropriately (e.g., show error message to the user)
@@ -40,38 +42,34 @@ const LoginForm = () => {
 
     return (
         <>
-            <div className="container">
-                <div className="wrapper">
-                    <div className="title"><span>Login Form</span></div>
-                    <form onSubmit={handleSubmit}>
-                        <div className="row">
-                            <input
-                                type="text"
-                                placeholder="Email or Phone"
-                                value={emailOrPhone}
-                                onChange={(e) => setEmailOrPhone(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="row">
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="pass"><a href="#">Forgot password?</a></div>
-                        <div className="row button">
-                            <input type="submit" value="Login" />
-                        </div>
-                        <div className="signup-link">Not a member? <a href="#">Signup now</a></div>
-                    </form>
-                </div>
+            <div className='loginlayout'>
+                <h1>Login</h1>
+                <form>
+                    <br />
+                    <p>Username Or Email</p>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter your Username or Email"
+                        value={emailOrPhone} // Change to emailOrPhone
+                        onChange={(e) => setEmailOrPhone(e.target.value)}
+                    />
+                    <p>Password</p>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <br />
+                    <button type="button" onClick={handleSubmit}> {/* Change to handleSubmit */}
+                        Login
+                    </button>
+                </form>
             </div>
         </>
     );
 };
 
-export default LoginForm;
+export default Login;
