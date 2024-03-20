@@ -28,6 +28,7 @@ const Login = () => {
                 console.log(data);
                 localStorage.setItem("Token", data.Token);
                 window.alert("Login Successfully");
+                window.location.href = '/';
             } else if (response.status === 404) {
                 window.alert("Username or password incorrect");
             } else {
